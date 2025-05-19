@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile Manager</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 500px;
+        margin: 20px auto;
+      }
+      button {
+        padding: 8px 15px;
+        margin: 5px;
+        cursor: pointer;
+      }
+      #UserList {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="addUser">ADD NEW USER</button>
+    <button id="showUser">SHOW USERS</button>
+    <button id="clearUser">CLEAR USERS</button>
+
+    <div id="UserList">No users yet</div>
+
+    <script>
+      const addUsers = document.getElementById("addUser");
+      const showUsers = document.getElementById("showUser");
+      const clearUsers = document.getElementById("clearUser");
+      const UserLists = document.querySelector("#UserList");
+
+      let users = [];
+
+      addUsers.addEventListener("click", () => {
+        let username = window.prompt("Enter User Name:");
+
+        if (username && username.trim() !== "") {
+          const cleanName = username.trim();
+          const upperName = cleanName.toUpperCase();
+          const lowerEmail = cleanName.toLowerCase();
+
+          users.push({
+            id: users.length + 1,
+            name: upperName,
+            email: `${lowerEmail}@example.com`,
+          });
+
+          window.alert("User added successfully!");
+        }
+      });
+
+      showUsers.addEventListener("click", () => {
+        console.log("All Users:");
+        users.forEach((user) => console.log(user));
+
+        if (users.length > 0) {
+          console.log("First user keys:", Object.keys(users[0]));
+          console.log("First user values:", Object.values(users[0]));
+        }
+        updateUserList();
+      });
+
+      clearUsers.addEventListener("click", () => {
+        if (confirm(" clear all users?")) {
+          users = [];
+
+          window.alert("All users cleared!");
+
+          UserLists.innerText = "No users";
+        }
+      });
+
+      function updateUserList() {
+        const userItems = users
+          .map((user) => `${user.id}. ${user.name} (${user.email})`)
+          .join("<br>");
+
+        UserLists.innerHTML = userItems;
+      }
+
+      setTimeout(() => {
+        console.log("This message appears after 3 seconds");
+      }, 3000);
+    </script>
+  </body>
+</html>
